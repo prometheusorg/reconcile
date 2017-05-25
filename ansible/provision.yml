@@ -1,0 +1,18 @@
+---
+- hosts: cal.webmedecin.net
+  remote_user: root
+  tasks:
+   - name: Install apt-transport-https
+     apt: pkg=apt-transport-https state=installed update_cache=true
+
+# --keyserver ha.pool.sks-keyservers.net --recv-keys 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+   - name: add Docker apt key
+     apt_key: id=0x9DC858229FC7DD38854AE2D88D81803C0EBFCD88 keyserver='ha.pool.sks-keyservers.net' keyring='/etc/apt/trusted.gpg.d/docker.gpg' state=present 
+#echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" | sudo tee /etc/apt/sources.list.d/docker.list
+# Add specified repository into sources list using specified filename.
+   - name: Add Docker repository
+     apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/debian stretch stable' state=present filename='docker' update_cache='yes'
+   - name: Install Docker CE                                          
+     apt: pkg=docker-ce state=installed update_cache=true  
+   - name: Install git                                                    
+     apt: pkg=git state=installed update_cache=true 
