@@ -7,6 +7,9 @@
 
 - hosts: cal.webmedecin.net
   remote_user: root
+  vars:
+    user1 : philippe
+    user2: jerome  
   tasks:
    - name: Install apt-transport-https
      apt: pkg=apt-transport-https state=installed update_cache=true
@@ -20,5 +23,14 @@
    - name: Install Docker CE                                          
      apt: pkg=docker-ce state=installed update_cache=true  
 
+   - name: add user1 to docker group
+     user: name={{ user1 }} groups=docker append=yes
+
+   - name: add user2 to docker group                                            
+     user: name={{ user2 }} groups=docker append=yes
+
    - name: Install git                                                    
-     apt: pkg=git state=installed update_cache=true 
+     apt: pkg=git state=installed update_cache=true
+
+   - name: Install certbot to get Letsencrypt TLS certificates free of charge
+     apt: pkg=certbot state=installed update_cache=true 
