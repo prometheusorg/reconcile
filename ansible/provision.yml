@@ -33,4 +33,7 @@
      apt: pkg=git state=installed update_cache=true
 
    - name: Install certbot to get Letsencrypt TLS certificates free of charge
-     apt: pkg=certbot state=installed update_cache=true 
+     apt: pkg=certbot state=installed update_cache=true
+
+   - name: Install nginx (reverse proxy 80 to 8008)   
+     apt: pkg=nginx state=installed update_cache=true 
